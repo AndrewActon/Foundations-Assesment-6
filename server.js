@@ -1,14 +1,28 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const app = express()
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
+app.use(cors())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, './public')))
 
 
+var _rollbarConfig = {
+    accessToken: "f5a7efb307c74894ba2b671e1424d37f",
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+        environment: "production"
+    }
+};
+
+
+
 app.get('/api/robots', (req, res) => {
+// app.get('http://localhost:3000/api/robots', (req, res) => {
     try {
         res.status(200).send(botsArr)
     } catch (error) {
@@ -18,6 +32,7 @@ app.get('/api/robots', (req, res) => {
 })
 
 app.get('/api/robots/five', (req, res) => {
+// app.get('http://localhost:3000/api/robots/five', (req, res) => {
     try {
         let shuffled = shuffleArray(bots)
         let choices = shuffled.slice(0, 5)
@@ -30,6 +45,7 @@ app.get('/api/robots/five', (req, res) => {
 })
 
 app.post('/api/duel', (req, res) => {
+// app.post('http://localhost:3000/api/duel', (req, res) => {
     try {
         // getting the duos from the front end
         let {compDuo, playerDuo} = req.body
@@ -60,10 +76,12 @@ app.post('/api/duel', (req, res) => {
     }
 })
 
-app.get('/api/player', (req, res) => {
-    try {
+// app.get('/api/player', (req, res) => {
+app.get('http://localhost:3000/api/player', (req, res) => {
+    try{
         res.status(200).send(playerRecord)
-    } catch (error) {
+    }
+        catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
         res.sendStatus(400)
     }
