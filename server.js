@@ -77,7 +77,7 @@ app.post('/api/duel', (req, res) => {
 })
 
 // app.get('/api/player', (req, res) => {
-app.get('http://localhost:3000/api/player', (req, res) => {
+app.get('/api/player', (req, res) => {
     try{
         res.status(200).send(playerRecord)
     }
